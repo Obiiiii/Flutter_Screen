@@ -22,6 +22,8 @@ class AppScaffold extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       body: hasGradient
           ? Container(
+              width: double.infinity,
+              height: double.infinity,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,

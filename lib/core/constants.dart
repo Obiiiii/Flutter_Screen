@@ -9,6 +9,11 @@ class AppConstants {
   static const successColor = Colors.green;
   static const warningColor = Colors.orange;
 
+  // Text Colors
+  static const textPrimary = Color(0xFFFFFFFF);
+  static const textSecondary = Color(0xFFB0B0B0);
+  static const textDark = Color(0xFF333333);
+
   // Dimensions
   static const double padding = 16.0;
   static const double paddingLarge = 24.0;
@@ -35,6 +40,12 @@ class AppConstants {
   static const emailInvalid = 'Email không hợp lệ';
   static const passwordRequired = 'Vui lòng nhập mật khẩu';
   static const passwordMinLength = 'Mật khẩu phải có ít nhất 6 ký tự';
+
+  // Theme
+  static const String themeKey = 'app_theme';
+  static const String lightTheme = 'light';
+  static const String darkTheme = 'dark';
+  static const String systemTheme = 'system';
 }
 
 // Helper functions
@@ -59,4 +70,25 @@ class AppHelpers {
 
   static double screenHeight(BuildContext context) =>
       MediaQuery.of(context).size.height;
+
+  // Check if device is in landscape mode
+  static bool isLandscape(BuildContext context) {
+    return MediaQuery.of(context).orientation == Orientation.landscape;
+  }
+
+  // Get current brightness based on system or app theme
+  static Brightness getCurrentBrightness(
+    BuildContext context,
+    String themeMode,
+  ) {
+    switch (themeMode) {
+      case AppConstants.lightTheme:
+        return Brightness.light;
+      case AppConstants.darkTheme:
+        return Brightness.dark;
+      case AppConstants.systemTheme:
+      default:
+        return MediaQuery.of(context).platformBrightness;
+    }
+  }
 }

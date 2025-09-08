@@ -39,72 +39,11 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery.of(context).size;
-    return ChangeNotifierProvider(
-      create: (_) => LoginProvider(),
-      child: AppScaffold(
-        hasGradient: true,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.all(AppConstants.paddingLarge),
-            child: Consumer<LoginProvider>(
-              builder: (context, provider, child) {
-                return Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      SizedBox(height: AppHelpers.screenHeight(context) * 0.05),
-
-                      // Header
-                      _buildHeader(),
-                      SizedBox(height: AppConstants.paddingLarge * 2),
-
-                      // Form
-                      _buildForm(provider),
-                      SizedBox(height: AppConstants.padding),
-
-                      // Options
-                      _buildOptions(provider),
-                      SizedBox(height: AppConstants.paddingLarge * 2),
-
-                      // Login Button
-                      CustomButton(
-                        text: AppConstants.loginButton,
-                        isLoading: provider.isLoading,
-                        onPressed: () => _handleLogin(provider),
-                      ),
-
-                      // Error Message
-                      if (provider.errorMessage != null) ...[
-                        SizedBox(height: AppConstants.padding),
-                        _buildErrorMessage(provider),
-                      ],
-
-                      SizedBox(height: AppConstants.paddingLarge),
-
-                      // Sign Up
-                      _buildSignUpOption(),
-
-                      SizedBox(height: screenSize.height),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHeader() {
-    final logoSize = AppHelpers.screenWidth(context) * 0.25;
+  Widget _buildHeader(BuildContext context) {
+    final logoSize = MediaQuery.of(context).size.width * 0.25;
 
     return Column(
       children: [
-        // Logo
         Container(
           width: logoSize,
           height: logoSize,
@@ -125,24 +64,20 @@ class _LoginScreenState extends State<LoginScreen> {
             color: AppConstants.primaryColor,
           ),
         ),
-
         SizedBox(height: AppConstants.paddingLarge),
-
         Text(
           AppConstants.loginTitle,
           style: TextStyle(
-            fontSize: AppHelpers.screenWidth(context) * 0.07,
+            fontSize: MediaQuery.of(context).size.width * 0.07,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
-
         SizedBox(height: AppConstants.padding / 2),
-
         Text(
           AppConstants.loginSubtitle,
           style: TextStyle(
-            fontSize: AppHelpers.screenWidth(context) * 0.04,
+            fontSize: MediaQuery.of(context).size.width * 0.04,
             color: Colors.white70,
           ),
           textAlign: TextAlign.center,
@@ -164,9 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
           validator: Validators.email,
           onFieldSubmitted: (_) => _passwordFocus.requestFocus(),
         ),
-
         SizedBox(height: AppConstants.padding),
-
         CustomTextField(
           label: AppConstants.passwordLabel,
           controller: _passwordController,
@@ -212,9 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ],
         ),
-
         Spacer(),
-
         TextButton(
           onPressed: () {
             AppHelpers.showSnackBar(
@@ -283,6 +214,69 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Widget _buildPortraitLayout(LoginProvider provider, Size screenSize) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _buildHeader(context),
+        SizedBox(height: AppConstants.paddingLarge * 2),
+        _buildForm(provider),
+        SizedBox(height: AppConstants.padding),
+        _buildOptions(provider),
+        SizedBox(height: AppConstants.paddingLarge),
+        CustomButton(
+          text: AppConstants.loginButton,
+          isLoading: provider.isLoading,
+          onPressed: () => _handleLogin(provider),
+        ),
+        if (provider.errorMessage != null) ...[
+          SizedBox(height: AppConstants.padding),
+          _buildErrorMessage(provider),
+        ],
+        SizedBox(height: AppConstants.paddingLarge),
+        _buildSignUpOption(),
+      ],
+    );
+  }
+
+  Widget _buildLandscapeLayout(LoginProvider provider, Size screenSize) {
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        minHeight: screenSize.height - MediaQuery.of(context).padding.vertical,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(flex: 3, child: _buildHeader(context)),
+          SizedBox(width: AppConstants.paddingLarge * 1.5),
+          Expanded(
+            flex: 4,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildForm(provider),
+                SizedBox(height: AppConstants.padding),
+                _buildOptions(provider),
+                SizedBox(height: AppConstants.paddingLarge),
+                CustomButton(
+                  text: AppConstants.loginButton,
+                  isLoading: provider.isLoading,
+                  onPressed: () => _handleLogin(provider),
+                ),
+                if (provider.errorMessage != null) ...[
+                  SizedBox(height: AppConstants.padding),
+                  _buildErrorMessage(provider),
+                ],
+                SizedBox(height: AppConstants.paddingLarge),
+                _buildSignUpOption(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<void> _handleLogin(LoginProvider provider) async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -297,9 +291,35 @@ class _LoginScreenState extends State<LoginScreen> {
         AppConstants.loginSuccess,
         color: AppConstants.successColor,
       );
-
-      // Navigate to home
       Navigator.pushReplacementNamed(context, '/home');
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bool isLandscape = AppHelpers.isLandscape(context);
+    final Size screenSize = MediaQuery.of(context).size;
+
+    return ChangeNotifierProvider(
+      create: (_) => LoginProvider(),
+      child: AppScaffold(
+        hasGradient: true,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(AppConstants.paddingLarge),
+            child: Consumer<LoginProvider>(
+              builder: (context, provider, child) {
+                return Form(
+                  key: _formKey,
+                  child: isLandscape
+                      ? _buildLandscapeLayout(provider, screenSize)
+                      : _buildPortraitLayout(provider, screenSize),
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
