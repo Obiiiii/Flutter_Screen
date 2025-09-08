@@ -2,7 +2,7 @@
 
 ## 📁 Project Structure
 
-lib/
+lib/ \n
 ├── core/
 │ ├── constants.dart
 │ ├── validators.dart
