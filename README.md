@@ -4,21 +4,21 @@
 
 lib/
 ├── core/
-│   ├── constants.dart
-│   ├── validators.dart
-│   ├── providers/
-│   │   ├── orientation_provider.dart
-│   │   └── theme_provider.dart
-│   └── widgets/
-│       ├── app_scaffold.dart
-│       ├── custom_button.dart
-│       └── custom_text_field.dart
+│ ├── constants.dart
+│ ├── validators.dart
+│ ├── providers/
+│ │ ├── orientation_provider.dart
+│ │ └── theme_provider.dart
+│ └── widgets/
+│ ├── app_scaffold.dart
+│ ├── custom_button.dart
+│ └── custom_text_field.dart
 ├── screens/
-│   └── login/
-│       ├── login_screen.dart
-│       └── login_provider.dart
+│ └── login/
+│ ├── login_screen.dart
+│ └── login_provider.dart
 ├── services/
-│   └── auth_service.dart
+│ └── auth_service.dart
 └── main.dart
 
 
