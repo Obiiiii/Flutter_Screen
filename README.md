@@ -1,7 +1,6 @@
 # Flutter Login App Documentation
 
 ## 📁 Project Structure
-1
 lib/<br>
 ├── core/<br>
 │   ├── constants.dart<br>
