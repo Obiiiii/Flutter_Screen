@@ -7,8 +7,8 @@ lib/<br>
 │   ├── constants.dart<br>
 │   ├── validators.dart<br>
 │   ├── providers/<br>
-│   │    ├── orientation_provider.dart<br>
-│   │    └── theme_provider.dart<br>
+│   │      ├── orientation_provider.dart<br>
+│   │      └── theme_provider.dart<br>
 │   └── widgets/<br>
 │            ├── app_scaffold.dart<br>
 │            ├── custom_button.dart<br>
