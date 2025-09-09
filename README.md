@@ -15,8 +15,8 @@ lib/<br>
 │       └── custom_text_field.dart<br>
 ├── screens/<br>
 │   └── login/<br>
-│       ├── login_screen.dart<br>
-│       └── login_provider.dart<br>
+│               ├── login_screen.dart<br>
+│               └── login_provider.dart<br>
 ├── services/<br>
 │   └── auth_service.dart<br>
 └── main.dart
