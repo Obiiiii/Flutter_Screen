@@ -1,6 +1,7 @@
 # Flutter Login App Documentation
 
 ## 📁 Project Structure
+
 lib/<br>
 ├── core/<br>
 │   ├── constants.dart<br>
@@ -9,13 +10,13 @@ lib/<br>
 │   │   ├── orientation_provider.dart<br>
 │   │   └── theme_provider.dart<br>
 │   └── widgets/<br>
-│              ├── app_scaffold.dart<br>
-│              ├── custom_button.dart<br>
-│              └── custom_text_field.dart<br>
+│       ├── app_scaffold.dart<br>
+│       ├── custom_button.dart<br>
+│       └── custom_text_field.dart<br>
 ├── screens/<br>
 │   └── login/<br>
-│              ├── login_screen.dart<br>
-│              └── login_provider.dart<br>
+│       ├── login_screen.dart<br>
+│       └── login_provider.dart<br>
 ├── services/<br>
 │   └── auth_service.dart<br>
 └── main.dart
